@@ -1,0 +1,38 @@
+/**
+ * Copyright 2017 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+ 
+"use strict";
+
+/**
+ * All this stuff is moved into global namespace and separate files just to be
+ * MAXIMUM clear and easy to understand
+ */
+
+var client;
+
+var today = new Date(); 
+var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+var dateTime = date+'|'+time;
+console.log(dateTime+"|")
+
+window.init = function(token) {
+  client = new ApiAi.ApiAiClient({accessToken: token});
+};
+
+function sendText(text) {
+  return client.textRequest(dateTime+"|"+text);
+}
