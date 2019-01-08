@@ -48,17 +48,35 @@
 
     createQueryNode(value);
     var responseNode = createResponseNode();
+    
 
     sendText(value)
       .then(function(response) {
         var result;
+        var link = ""
         try {
           if(response.result.fulfillment.speech === ""){
-          result = response.result.fulfillment.data.google.richResponse.items[0].simpleResponse.textToSpeech;
-		var linkInformation = "Click to open webpage";
-		var link = "http://pixelarchitect.ca";
-	  	var extraNode = createLinkButtonNode(); 
-		  setButtonLinkNodes(linkInformation, extraNode, link);
+
+          if("data" in response.result.fulfillment) {
+            console.log("IN LAMBDA")
+            result = response.result.fulfillment.data.google.richResponse.items[0].simpleResponse.textToSpeech;
+            if(response.result.fulfillment.data.google.richResponse.items[0].simpleResponse.link = ""){
+              var linkInformation = "Click for more information";
+              var link = "http://pixelarchitect.ca";
+              var extraNode = createLinkButtonNode(); 
+              setButtonLinkNodes(linkInformation, extraNode, link);
+            }
+
+          }else {
+
+            console.log("IN CHATBOT")
+            result = response.result.fulfillment.messages[0].payload.chatbot.Message;
+            var linkInformation = "Click for more information";
+            var link = response.result.fulfillment.messages[0].payload.chatbot.link;
+            console.log("THIS IS LINK " + link)
+            var extraNode = createLinkButtonNode(); 
+            setButtonLinkNodes(linkInformation, extraNode, link);
+          }
           }
           else {
           result = response.result.fulfillment.speech
@@ -67,16 +85,16 @@
           result = "Please try again. You can say help, to find out what I can do.";
         }
         setResponseJSON(response);
-        setResponseOnNode(result, responseNode);
+        setResponseOnNode(result, responseNode, link);
       })
       .catch(function(err) {
         setResponseJSON(err);
-        setResponseOnNode("Something goes wrong", responseNode);
+        setResponseOnNode("Something goes wrong", responseNode, link);
       });
   }
 
   function createQueryNode(query) {
-    var node = document.createElement('div');
+    var node = document.createElement("div");
     node.className = "clearfix left-align left card-panel green accent-1";
     node.innerHTML = query;
     resultDiv.appendChild(node);
@@ -84,7 +102,7 @@
 
 
 	function createLinkButtonNode(){
-	var node = document.createElement('a');
+	var node = document.createElement("a");
     node.className = "clearfix right-align right card-panel blue-text text-darken-2 hoverable";
     node.innerHTML = "...";
     resultDiv.appendChild(node);
@@ -94,7 +112,7 @@
 
 
   function createResponseNode() {
-    var node = document.createElement('div');
+    var node = document.createElement("div");
     node.className = "clearfix right-align right card-panel blue-text text-darken-2 hoverable";
     node.innerHTML = "...";
     resultDiv.appendChild(node);
@@ -103,15 +121,21 @@
 
 	function setButtonLinkNodes(response, extraNode, linkAddress){
 		extraNode.innerHTML = response ? response : "[empty response]";
-	    extraNode.setAttribute('data-actual-response', response);
+	    extraNode.setAttribute("data-actual-response", response);
 		extraNode.style.backgroundColor = "#E5FFCC";
-		extraNode.setAttribute('href',linkAddress)
+		extraNode.setAttribute("href",linkAddress)
 
 	}
 
-  function setResponseOnNode(response, node) {
+  function setResponseOnNode(response, node, link) {
     node.innerHTML = response ? response : "[empty response]";
-    node.setAttribute('data-actual-response', response);
+
+    response = response.replace(/\n/g, "<br />");
+    //console.log("THis is response from setResponseNode "  + response)
+    response = "<a href="+link+">" +response +"</a>";
+    node.innerHTML = response;
+    node.style.textAlign = "left";
+    //node.setAttribute("data-actual-response", response);
 
   }
 

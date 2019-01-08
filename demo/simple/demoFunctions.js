@@ -23,17 +23,11 @@
 
 var client;
 
-var today = new Date(); 
-var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-var dateTime = date+' | '+time;
-console.log(dateTime+" | ")
 
 window.init = function(token) {
   client = new ApiAi.ApiAiClient({accessToken: token});
 };
 
 function sendText(text) {
-  text = " ( " +text+ " ) "
-  return client.textRequest(dateTime+text);
+  return client.textRequest(text);
 }
