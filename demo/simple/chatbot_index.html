@@ -21,18 +21,22 @@ body{
 	height: 100%;
 	background: #95a5a6;
 }
+
+
+
 .chat-box{
 	position: absolute;
 	right: 20px;
-	bottom: 0px;
+	bottom: 50px;
 	background: white;
 	width: 300px;
 	border-radius: 5px 5px 0px 0px;
+  
 }
 .chat-head{
 	width: inherit;
 	height: 45px;
-	background: #2c3e50;
+	background: #ff5a00;
 	border-radius: 5px 5px 0px 0px;
 }
 .chat-head h2{
@@ -55,11 +59,12 @@ body{
 .chat-text{
 	position: fixed;
 	bottom: 0px;
-	height: 45px;
-	width: inherit;
+	height: 30px;
+	width: 280px;
+  border: 10px solid #f5f5f5
 }
 .chat-text textarea{
-	width: inherit;
+	width: 280px;
 	height: inherit; 
 	box-sizing: border-box;
 	border: 1px solid #bdc3c7;
@@ -79,12 +84,10 @@ body{
 	line-height: 30px;
 	position: relative;
   color: white;
-
-
-
 }
 
 .msg-send{
+  
   background: #2ecc71;
   text-align: center;
   margin-left: 15px;
@@ -100,16 +103,32 @@ body{
 #msg-insert{
 
   padding: 20px;
-  display: table-cell;
-  vertical-align: bottom;
-  position: fixed;
-  bottom: 25px;
+
 }
 
 
 .msg-receive:hover, .msg-send:hover{
 	opacity: .9;
 }
+
+.icon-style {
+
+  display: inline-block;
+}
+
+#chat-icon{
+
+  position: absolute;
+	right: 20px;
+	bottom: 0px;
+  font-size: 40px;
+  color: white;
+	background: #ff5a00;
+	border-radius: 5px 5px 0px 0px;
+  padding: 10px;
+}
+
+
 
 
     </style>
@@ -130,24 +149,23 @@ body{
     </div>
 </div>
 
+<i class="fas fa-comments" id = "chat-icon"></i>
 
 
 <div class="wrapper">
   <div class="chat-box">
     <div class="chat-head">
-      <img src="https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png" title="Expand Arrow" width="16">
+        <i class="fas fa-comment" style="font-size:20px; color:white; padding: 15px"> &nbsp; Chat -- Pixel Architect </i>
+        <i class="fas fa-times" id = "close" style="font-size:20px; color:white; padding: 15px; display:inline"> </i>
+
     </div>
     <div class="chat-body">
       <div id="msg-insert">
 
-      
-        <div class="msg-send" style="display:none"> Send message </div>
-        <div class="msg-receive" style="display:none"> Received message </div>
-
         
       </div>
       <div class="chat-text">
-        <textarea id = "q" placeholder="Send"></textarea>
+        <textarea id = "q" placeholder="Write your message here..."></textarea>
       </div>
     </div>
   </div>

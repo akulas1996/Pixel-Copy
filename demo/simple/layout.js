@@ -16,6 +16,7 @@
  
 (function() {
   "use strict";
+  $('.wrapper').hide();
   
     var ENTER_KEY_CODE = 13;
     var queryInput, resultDiv, accessTokenInput;
@@ -32,24 +33,33 @@
       setAccessTokenButton.addEventListener("click", setAccessToken);
   
       window.init(accessTokenInput.value);
+      
     }
   
   
   
   
-    var arrow = $('.chat-head img');
+    var arrow = $('#close');
     var textarea = $('.chat-text textarea');
+
+    var chatIcon = $('#chat-icon');
+
+    chatIcon.on('click', function(){
+      $('.wrapper').show();
+    });
+
   
     arrow.on('click', function(){
-      var src = arrow.attr('src');
+      $('.wrapper').hide();
+      // var src = arrow.attr('src');
   
-      $('.chat-body').slideToggle('fast');
-      if(src == 'https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png'){
-        arrow.attr('src', 'https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_up-16.png');
-      }
-      else{
-        arrow.attr('src', 'https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png');
-      }
+      // $('.chat-body').slideToggle('fast');
+      // if(src == 'https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png'){
+      //   arrow.attr('src', 'https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_up-16.png');
+      // }
+      // else{
+      //   arrow.attr('src', 'https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png');
+      // }
     });
   
   
@@ -115,9 +125,21 @@
   }
 
   function createQueryNode(query) {
+
     var node = document.createElement("div");
     node.className = "msg-send";
     node.innerHTML = query;
+    var iconNode = document.createElement("i");
+    iconNode.className = "fas fa-user";
+    //iconNode.style="float:right; background-color:black; font-size:40px; padding:5px; z-index:0";
+    iconNode.style.cssFloat = "right";
+    iconNode.style.display = "inline";
+    //iconNode.style.height = "50px";
+    //iconNode.style.width = "50px";
+    iconNode.style.backgroundColor = "#e9ecef";
+    iconNode.style.color = "white"
+    resultDiv.appendChild(iconNode);
+
     resultDiv.appendChild(node);
   }
 
@@ -133,10 +155,14 @@
 
 
   function createResponseNode() {
+
     var node = document.createElement("div");
     node.className = "msg-receive";
     node.innerHTML = "...";
     resultDiv.appendChild(node);
+
+
+    
     return node;
   }
 
