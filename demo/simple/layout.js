@@ -16,27 +16,48 @@
  
 (function() {
   "use strict";
-
-  var ENTER_KEY_CODE = 13;
-  var queryInput, resultDiv, accessTokenInput;
-
-  window.onload = init;
-
-  function init() {
-    queryInput = document.getElementById("q");
-    resultDiv = document.getElementById("result");
-    accessTokenInput = document.getElementById("access_token");
-    var setAccessTokenButton = document.getElementById("set_access_token");
-
-    queryInput.addEventListener("keydown", queryInputKeyDown);
-    setAccessTokenButton.addEventListener("click", setAccessToken);
-  }
-
-  function setAccessToken() {
-    document.getElementById("placeholder").style.display = "none";
-    document.getElementById("main-wrapper").style.display = "block";
-    window.init(accessTokenInput.value);
-  }
+  
+    var ENTER_KEY_CODE = 13;
+    var queryInput, resultDiv, accessTokenInput;
+  
+    window.onload = init;
+  
+    function init() {
+      queryInput = document.getElementById("q");
+      resultDiv = document.getElementById("msg-insert");
+      accessTokenInput = document.getElementById("access_token");
+      var setAccessTokenButton = document.getElementById("set_access_token");
+  
+      queryInput.addEventListener("keydown", queryInputKeyDown);
+      setAccessTokenButton.addEventListener("click", setAccessToken);
+  
+      window.init(accessTokenInput.value);
+    }
+  
+  
+  
+  
+    var arrow = $('.chat-head img');
+    var textarea = $('.chat-text textarea');
+  
+    arrow.on('click', function(){
+      var src = arrow.attr('src');
+  
+      $('.chat-body').slideToggle('fast');
+      if(src == 'https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png'){
+        arrow.attr('src', 'https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_up-16.png');
+      }
+      else{
+        arrow.attr('src', 'https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png');
+      }
+    });
+  
+  
+  
+    function setAccessToken() {
+  
+  
+    }
 
   function queryInputKeyDown(event) {
     if (event.which !== ENTER_KEY_CODE) {
@@ -95,7 +116,7 @@
 
   function createQueryNode(query) {
     var node = document.createElement("div");
-    node.className = "clearfix left-align left card-panel green accent-1";
+    node.className = "msg-send";
     node.innerHTML = query;
     resultDiv.appendChild(node);
   }
@@ -103,7 +124,7 @@
 
 	function createLinkButtonNode(){
 	var node = document.createElement("a");
-    node.className = "clearfix right-align right card-panel blue-text text-darken-2 hoverable";
+    node.className = "msg-receive";
     node.innerHTML = "...";
     resultDiv.appendChild(node);
     return node;
@@ -113,7 +134,7 @@
 
   function createResponseNode() {
     var node = document.createElement("div");
-    node.className = "clearfix right-align right card-panel blue-text text-darken-2 hoverable";
+    node.className = "msg-receive";
     node.innerHTML = "...";
     resultDiv.appendChild(node);
     return node;
@@ -132,7 +153,7 @@
 
     response = response.replace(/\n/g, "<br />");
     //console.log("THis is response from setResponseNode "  + response)
-    response = "<a href="+link+">" +response +"</a>";
+    //response = "<a href="+link+">" +response +"</a>";
     node.innerHTML = response;
     node.style.textAlign = "left";
     //node.setAttribute("data-actual-response", response);

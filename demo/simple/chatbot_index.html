@@ -5,29 +5,119 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Title</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <script src="../../target/ApiAi.js"></script>
     <script src="demoFunctions.js"></script>
 
     <style>
-        #placeholder {
-            text-align: center;
-            margin-top: 1.5em;
-        }
-        #main-wrapper {
-            display: none;
-        }
-        .clearfix {
-            clear: both;
-        }
+
+*{
+	padding: 0px;
+	margin: 0px;
+	font-family: 'Fira Code';
+}
+body{
+	height: 100%;
+	background: #95a5a6;
+}
+.chat-box{
+	position: absolute;
+	right: 20px;
+	bottom: 0px;
+	background: white;
+	width: 300px;
+	border-radius: 5px 5px 0px 0px;
+}
+.chat-head{
+	width: inherit;
+	height: 45px;
+	background: #2c3e50;
+	border-radius: 5px 5px 0px 0px;
+}
+.chat-head h2{
+	color: white;
+	padding: 8px;
+	display: inline-block;
+}
+.chat-head img{
+	cursor: pointer;
+	float: right;
+	width: 25px;
+	margin: 10px;
+}
+.chat-body{
+	height: 355px;
+	width: inherit;
+	overflow: auto;
+	margin-bottom: 45px;
+}
+.chat-text{
+	position: fixed;
+	bottom: 0px;
+	height: 45px;
+	width: inherit;
+}
+.chat-text textarea{
+	width: inherit;
+	height: inherit; 
+	box-sizing: border-box;
+	border: 1px solid #bdc3c7;
+	padding: 10px;
+	resize: none;
+}
+.chat-text textarea:active, .chat-text textarea:focus, .chat-text textarea:hover{
+	border-color: royalblue;
+}
+
+
+.msg-send, .msg-receive{
+
+	padding: 2px 2px 2px 2px;
+	margin: 10px auto;
+	border-radius: 3px;
+	line-height: 30px;
+	position: relative;
+  color: white;
+
+
+
+}
+
+.msg-send{
+  background: #2ecc71;
+  text-align: center;
+  margin-left: 15px;
+  
+}
+.msg-receive{
+  background: #3498db;
+  text-align: center;
+  margin-right: 15px;
+  
+ 
+}
+#msg-insert{
+
+  padding: 20px;
+  display: table-cell;
+  vertical-align: bottom;
+  position: fixed;
+  bottom: 25px;
+}
+
+
+.msg-receive:hover, .msg-send:hover{
+	opacity: .9;
+}
+
+
     </style>
 </head>
 <body>
-<div class="container">
+<div class="container" style="display:none">
     <div class="row">
-        <h5>BC"s Best Live Music</h5>
+        <h5>BC's Best Live Music</h5>
     </div>
     <div class="row">
         <div class="input-field col s10" style="display:none">
@@ -39,32 +129,49 @@
         </div>
     </div>
 </div>
-<div id="placeholder">
-    <h5>BC Best Live Music Chat Bot</h5>
-</div>
-<div id="main-wrapper">
-    <div class="container">
-        <div class="row">
-            <div class="col s10">
-                <div class="input-field">
-                    <input placeholder="Hey, ask me something..." id="q" type="text" >
-                </div>
-                <div id="result">
-                    <!--div class="left-align flow-text">test</div>
-                    <div class="right-align flow-text">one more test</div-->
-                </div>
-            </div>
-            <div class="col s2"></div>
-            <div class="col s3" style="display:none">
-            <!--h5>Request payload:</h5>
-            <pre id="jsonRequest"></pre-->
-            <h5>Response payload:</h5>
-            <pre id="jsonResponse"></pre>
-            </div>
-        </div>
+
+
+
+<div class="wrapper">
+  <div class="chat-box">
+    <div class="chat-head">
+      <img src="https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png" title="Expand Arrow" width="16">
     </div>
+    <div class="chat-body">
+      <div id="msg-insert">
+
+      
+        <div class="msg-send" style="display:none"> Send message </div>
+        <div class="msg-receive" style="display:none"> Received message </div>
+
+        
+      </div>
+      <div class="chat-text">
+        <textarea id = "q" placeholder="Send"></textarea>
+      </div>
+    </div>
+  </div>
 </div>
+
+
+
+<div class="col s2"></div>
+<div class="col s3" style="display:none" >
+<!--h5>Request payload:</h5>
+<pre id="jsonRequest"></pre-->
+<h5>Response payload:</h5>
+<pre id="jsonResponse"></pre>
+</div>
+
+
+
+
+
+
 <script defer src="layout.js"></script>
+
+
+
 
 </body>
 </html>
