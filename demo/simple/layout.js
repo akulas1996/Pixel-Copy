@@ -63,18 +63,7 @@
       $('.wrapper').hide();
       $('#text-before-icon').show();
       chatIcon.toggleClass('fa-times-circle fa-minus-circle')
-      //chatIcon.toggleClass('fa-times-circle fa-minus-circle')
-
-
-      // var src = arrow.attr('src');
-  
-      // $('.chat-body').slideToggle('fast');
-      // if(src == 'https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png'){
-      //   arrow.attr('src', 'https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_up-16.png');
-      // }
-      // else{
-      //   arrow.attr('src', 'https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png');
-      // }
+    
     });
   
   
@@ -101,13 +90,20 @@
           var link = ""
           try {
             if(response.result.fulfillment.speech === ""){
+              
   
             if("data" in response.result.fulfillment) {
               console.log("IN LAMBDA")
+              console.log(response+"");
               result = response.result.fulfillment.data.google.richResponse.items[0].simpleResponse.textToSpeech;
               if(response.result.fulfillment.data.google.richResponse.items[0].simpleResponse.link = ""){
                 var linkInformation = "Click for more information";
                 var link = "http://pixelarchitect.ca";
+                var extraNode = createLinkButtonNode(); 
+                setButtonLinkNodes(linkInformation, extraNode, link);
+              } else{
+                link = response.result.fulfillment.data.google.richResponse.items[0].simpleResponse.link;
+                var linkInformation = "Click for more information";
                 var extraNode = createLinkButtonNode(); 
                 setButtonLinkNodes(linkInformation, extraNode, link);
               }
@@ -163,12 +159,19 @@
 
           if("data" in response.result.fulfillment) {
             console.log("IN LAMBDA")
+            console.log(response)
             result = response.result.fulfillment.data.google.richResponse.items[0].simpleResponse.textToSpeech;
             if(response.result.fulfillment.data.google.richResponse.items[0].simpleResponse.link = ""){
               var linkInformation = "Click for more information";
               var link = "http://pixelarchitect.ca";
               var extraNode = createLinkButtonNode(); 
               setButtonLinkNodes(linkInformation, extraNode, link);
+            } else{
+              var linkInformation = "Click for more information";
+              var link = response.result.fulfillment.data.google.richResponse.items[0].simpleResponse.link;
+              var extraNode = createLinkButtonNode(); 
+              setButtonLinkNodes(linkInformation, extraNode, link);
+
             }
 
           }else {
@@ -204,20 +207,20 @@
     var node = document.createElement("div");
     node.className = "msg-send";
     node.innerHTML = query;
-    // var iconNode = document.createElement("i");
-    // iconNode.className = "fas fa-user";
-    //iconNode.style="float:right; background-color:black; font-size:40px; padding:5px; z-index:0";
-    // iconNode.style.cssFloat = "right";
-    // iconNode.style.display = "inline-block";
-    // //iconNode.style.height = "50px";
-    // //iconNode.style.width = "50px";
-    // iconNode.style.backgroundColor = "#e9ecef";
-    // iconNode.style.color = "black";
-    // iconNode.style.zIndex="10000";
-    // iconNode.style.position="relative";
-    // iconNode.style.textAlign="right";
-    // iconNode.style.padding="10px"
-    // resultDiv.appendChild(iconNode);
+    var iconNode = document.createElement("i");
+    iconNode.className = "fas fa-user";
+    iconNode.style="float:right; background-color:black; font-size:40px; padding:5px; z-index:0";
+    iconNode.style.cssFloat = "right";
+    iconNode.style.display = "inline-block";
+    //iconNode.style.height = "50px";
+    //iconNode.style.width = "50px";
+    iconNode.style.backgroundColor = "#e9ecef";
+    iconNode.style.color = "black";
+    iconNode.style.zIndex="10000";
+    iconNode.style.position="relative";
+    iconNode.style.textAlign="right";
+    iconNode.style.padding="10px"
+    resultDiv.appendChild(iconNode);
 
     resultDiv.appendChild(node);
   }
@@ -247,9 +250,10 @@
 
 	function setButtonLinkNodes(response, extraNode, linkAddress){
 		extraNode.innerHTML = response ? response : "[empty response]";
-	    extraNode.setAttribute("data-actual-response", response);
-		extraNode.style.backgroundColor = "#E5FFCC";
-		extraNode.setAttribute("href",linkAddress)
+      extraNode.setAttribute("data-actual-response", response);
+      console.log("Link addres " + linkAddress);
+		extraNode.style.backgroundColor = "royalblue";
+		extraNode.setAttribute("href","google.ca")
 
 	}
 
@@ -261,13 +265,14 @@
     node.innerHTML = response;
     node.style.textAlign = "left";
     node.className = "msg-receive";
+    
     resultDiv.appendChild(node);
     var d = $('.chat-body');
     console.log(d.height())
-    //d.scrollTop(d.prop("scrollHeight"));
+    d.scrollTop(d.prop("scrollHeight"));
     // d.animate({scrollTop: 1000}, 2000);
 
-    d.animate({ scrollTop: 3000 }, 3000);
+    //d.animate({ scrollTop: 5000 }, 30000);
 
     
 
