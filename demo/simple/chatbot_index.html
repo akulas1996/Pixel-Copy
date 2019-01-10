@@ -19,7 +19,7 @@
 }
 body{
 	height: 100%;
-	background: #95a5a6;
+	background: #bdc3c7;
 }
 
 
@@ -126,14 +126,36 @@ body{
 	background: #ff5a00;
 	border-radius: 5px 5px 0px 0px;
   padding: 10px;
+   display: inline-block;
+   margin-bottom: 20px;
+   border-radius: 10px;
 }
 
+#text-before-icon{
+  position: absolute;
+	right: 85px;
+	bottom: 0px;
+  font-size: 20px;
+  color: black;
+	border-radius: 5px 5px 0px 0px;
+  background-color: #346282;
+  padding: 5px;
+  margin-bottom: 30px;
+  float: left;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-top-right-radius: 0px;
+
+}
 
 
 
     </style>
 </head>
 <body>
+
+
+
 <div class="container" style="display:none">
     <div class="row">
         <h5>BC's Best Live Music</h5>
@@ -149,7 +171,13 @@ body{
     </div>
 </div>
 
-<i class="fas fa-comments" id = "chat-icon"></i>
+
+
+    <i class="fas fa-comments" id="chat-icon"></i>
+    
+    <div  id = "text-before-icon">Got a question??</div>
+
+
 
 
 <div class="wrapper">
@@ -165,7 +193,7 @@ body{
         
       </div>
       <div class="chat-text">
-        <textarea id = "q" placeholder="Write your message here..."></textarea>
+        <textarea id = "q" style="font-size: 11pt" placeholder="Write your message here..."></textarea>
       </div>
     </div>
   </div>
