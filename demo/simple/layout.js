@@ -44,13 +44,24 @@
 
     var chatIcon = $('#chat-icon');
 
+
+
+
+
     chatIcon.on('click', function(){
       $('.wrapper').show();
+      chatIcon.toggleClass('fa-times-circle fa-minus-circle')
+      $('#text-before-icon').hide();
     });
 
   
     arrow.on('click', function(){
       $('.wrapper').hide();
+      $('#text-before-icon').show();
+      chatIcon.toggleClass('fa-times-circle fa-minus-circle')
+      //chatIcon.toggleClass('fa-times-circle fa-minus-circle')
+
+
       // var src = arrow.attr('src');
   
       // $('.chat-body').slideToggle('fast');
@@ -116,10 +127,12 @@
           result = "Please try again. You can say help, to find out what I can do.";
         }
         setResponseJSON(response);
+        
         setResponseOnNode(result, responseNode, link);
       })
       .catch(function(err) {
         setResponseJSON(err);
+        var link="http://pixelarchitect.ca"
         setResponseOnNode("Something goes wrong", responseNode, link);
       });
   }
@@ -133,11 +146,15 @@
     iconNode.className = "fas fa-user";
     //iconNode.style="float:right; background-color:black; font-size:40px; padding:5px; z-index:0";
     iconNode.style.cssFloat = "right";
-    iconNode.style.display = "inline";
+    iconNode.style.display = "inline-block";
     //iconNode.style.height = "50px";
     //iconNode.style.width = "50px";
     iconNode.style.backgroundColor = "#e9ecef";
-    iconNode.style.color = "white"
+    iconNode.style.color = "black";
+    iconNode.style.zIndex="10000";
+    iconNode.style.position="relative";
+    iconNode.style.textAlign="right";
+    iconNode.style.padding="10px"
     resultDiv.appendChild(iconNode);
 
     resultDiv.appendChild(node);
@@ -182,9 +199,34 @@
     //response = "<a href="+link+">" +response +"</a>";
     node.innerHTML = response;
     node.style.textAlign = "left";
+
+    node.className = "msg-receive";
+    var iconNode = document.createElement("i");
+    iconNode.className = "fas fa-user";
+    //iconNode.style="float:right; background-color:black; font-size:40px; padding:5px; z-index:0";
+    iconNode.style.cssFloat = "left";
+    iconNode.style.display = "inline-block";
+    //iconNode.style.height = "50px";
+    //iconNode.style.width = "50px";
+    iconNode.style.backgroundColor = "#e9ecef";
+    iconNode.style.color = "black";
+    iconNode.style.zIndex="10000";
+    iconNode.style.position="relative";
+    iconNode.style.textAlign="left";
+    iconNode.style.padding="10px"
+    resultDiv.appendChild(iconNode);
+    resultDiv.appendChild(node);
+
+
+    var d = $('.chat-body');
+    d.scrollTop(d.prop("scrollHeight"));
+    
+
+
     //node.setAttribute("data-actual-response", response);
 
   }
+
 
   function setResponseJSON(response) {
     var node = document.getElementById("jsonResponse");
