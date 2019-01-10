@@ -142,20 +142,20 @@
     var node = document.createElement("div");
     node.className = "msg-send";
     node.innerHTML = query;
-    var iconNode = document.createElement("i");
-    iconNode.className = "fas fa-user";
+    // var iconNode = document.createElement("i");
+    // iconNode.className = "fas fa-user";
     //iconNode.style="float:right; background-color:black; font-size:40px; padding:5px; z-index:0";
-    iconNode.style.cssFloat = "right";
-    iconNode.style.display = "inline-block";
-    //iconNode.style.height = "50px";
-    //iconNode.style.width = "50px";
-    iconNode.style.backgroundColor = "#e9ecef";
-    iconNode.style.color = "black";
-    iconNode.style.zIndex="10000";
-    iconNode.style.position="relative";
-    iconNode.style.textAlign="right";
-    iconNode.style.padding="10px"
-    resultDiv.appendChild(iconNode);
+    // iconNode.style.cssFloat = "right";
+    // iconNode.style.display = "inline-block";
+    // //iconNode.style.height = "50px";
+    // //iconNode.style.width = "50px";
+    // iconNode.style.backgroundColor = "#e9ecef";
+    // iconNode.style.color = "black";
+    // iconNode.style.zIndex="10000";
+    // iconNode.style.position="relative";
+    // iconNode.style.textAlign="right";
+    // iconNode.style.padding="10px"
+    // resultDiv.appendChild(iconNode);
 
     resultDiv.appendChild(node);
   }
@@ -201,20 +201,20 @@
     node.style.textAlign = "left";
 
     node.className = "msg-receive";
-    var iconNode = document.createElement("i");
-    iconNode.className = "fas fa-user";
+    // var iconNode = document.createElement("i");
+    // iconNode.className = "fas fa-user";
     //iconNode.style="float:right; background-color:black; font-size:40px; padding:5px; z-index:0";
-    iconNode.style.cssFloat = "left";
-    iconNode.style.display = "inline-block";
+    // iconNode.style.cssFloat = "left";
+    // iconNode.style.display = "inline-block";
     //iconNode.style.height = "50px";
     //iconNode.style.width = "50px";
-    iconNode.style.backgroundColor = "#e9ecef";
-    iconNode.style.color = "black";
-    iconNode.style.zIndex="10000";
-    iconNode.style.position="relative";
-    iconNode.style.textAlign="left";
-    iconNode.style.padding="10px"
-    resultDiv.appendChild(iconNode);
+    // iconNode.style.backgroundColor = "#e9ecef";
+    // iconNode.style.color = "black";
+    // iconNode.style.zIndex="10000";
+    // iconNode.style.position="relative";
+    // iconNode.style.textAlign="left";
+    // iconNode.style.padding="10px"
+    //resultDiv.appendChild(iconNode);
     resultDiv.appendChild(node);
 
 
