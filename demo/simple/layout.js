@@ -22,6 +22,9 @@
     var queryInput, resultDiv, accessTokenInput, sendButton;
   
     window.onload = init;
+    var i = 0;
+    var fromDialogflow = [];
+    var fromUser = [];
   
     function init() {
       queryInput = document.getElementById("q");
@@ -37,8 +40,55 @@
 
   
       window.init(accessTokenInput.value);
+
+      var retrievedData = localStorage.getItem("responseMessages");
+      fromDialogflow = JSON.parse(retrievedData);
+
+      var qMessages = localStorage.getItem("queryMessages");
+      fromUser = JSON.parse(qMessages);
+      
+      //alert(fromDialogflow.length);
+      i = fromDialogflow.length;
+      console.log(String(fromDialogflow[0]))
+      var k = 0;
+      for(k = 0; k < fromDialogflow.length; k++){
+        createQueryNode(fromUser[k]);
+        var node = createResponseNode();
+        var link = "http://pixelarchitect.ca"
+        setResponseFromStorage(fromDialogflow[k], node)
+
+      }
       
     }
+
+    window.onclose = deleteAll
+    function deleteAll(){
+      localStorage.removeItem("responseMessages");
+      localStorage.removeItem("queryMessages");
+    }
+
+    // window.onclose() = function(){
+    //   // localStorage.removeItem("responseMessages");
+    //   // localStorage.removeItem("queryMessages");
+
+      
+    // }
+
+
+    function setResponseFromStorage(response, node){
+
+      node.innerHTML = response;
+      node.style.textAlign = "left";
+      node.className = "msg-receive";
+      
+      resultDiv.appendChild(node);
+      var d = $('.chat-body');
+      console.log(d.height())
+      d.scrollTop(d.prop("scrollHeight"));
+
+    }
+
+  
   
   
   
@@ -111,9 +161,9 @@
             }else {
   
               console.log("IN CHATBOT")
-              result = response.result.fulfillment.messages[0].payload.chatbot.Message;
+              result = response.result.fulfillment.fromDialogflow[0].payload.chatbot.Message;
               var linkInformation = "Click for more information";
-              var link = response.result.fulfillment.messages[0].payload.chatbot.link;
+              var link = response.result.fulfillment.fromDialogflow[0].payload.chatbot.link;
               console.log("THIS IS LINK " + link)
               var extraNode = createLinkButtonNode(); 
               setButtonLinkNodes(linkInformation, extraNode, link);
@@ -177,9 +227,9 @@
           }else {
 
             console.log("IN CHATBOT")
-            result = response.result.fulfillment.messages[0].payload.chatbot.Message;
+            result = response.result.fulfillment.fromDialogflow[0].payload.chatbot.Message;
             var linkInformation = "Click for more information";
-            var link = response.result.fulfillment.messages[0].payload.chatbot.link;
+            var link = response.result.fulfillment.fromDialogflow[0].payload.chatbot.link;
             console.log("THIS IS LINK " + link)
             var extraNode = createLinkButtonNode(); 
             setButtonLinkNodes(linkInformation, extraNode, link);
@@ -222,6 +272,9 @@
     iconNode.style.padding="10px"
     resultDiv.appendChild(iconNode);
 
+    console.log(query);
+    fromUser[i] = query;
+
     resultDiv.appendChild(node);
   }
 
@@ -242,9 +295,6 @@
     node.className = "msg-receive";
     node.innerHTML = "...";
     resultDiv.appendChild(node);
-
-
-    
     return node;
   }
 
@@ -256,6 +306,11 @@
 		extraNode.setAttribute("href","google.ca")
 
 	}
+
+
+
+  
+
 
   function setResponseOnNode(response, node, link) {
     node.innerHTML = response ? response : "[empty response]";
@@ -270,15 +325,13 @@
     var d = $('.chat-body');
     console.log(d.height())
     d.scrollTop(d.prop("scrollHeight"));
-    // d.animate({scrollTop: 1000}, 2000);
 
-    //d.animate({ scrollTop: 5000 }, 30000);
+    //push the responses to the browser local storage
 
-    
+    fromDialogflow[i] = response;
+    i++;
 
-
-    //node.setAttribute("data-actual-response", response);
-
+ 
   }
 
 
@@ -287,8 +340,17 @@
     node.innerHTML = JSON.stringify(response, null, 2);
   }
 
-  function sendRequest() {
+  window.onbeforeunload = function(){
+    localStorage.setItem("responseMessages", JSON.stringify(fromDialogflow));
+    localStorage.setItem("queryMessages", JSON.stringify(fromUser));
+ }
 
-  }
+
+//    window.onload = function() {
+//      var retrievedData = localStorage.getItem("responseMessages");
+//      var fromDialogflow = JSON.parse(retrievedData);
+//      alert(fromDialogflow.length);
+
+//  }
 
 })();
