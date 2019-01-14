@@ -27,6 +27,7 @@
     var fromUser = [];
   
     function init() {
+      deleteMessagesIfTimeExpires();
       queryInput = document.getElementById("q");
       sendButton = document.getElementById("click");
       resultDiv = document.getElementById("msg-insert");
@@ -40,15 +41,27 @@
 
   
       window.init(accessTokenInput.value);
+      console.log(fromDialogflow.length)
+      if(localStorage.getItem("responseMessages") === null) {
+        fromDialogflow =[];
+      } else {
+        var retrievedData = localStorage.getItem("responseMessages");
+        console.log(retrievedData+" RET ");
+        fromDialogflow = JSON.parse(retrievedData);
+      }
 
-      var retrievedData = localStorage.getItem("responseMessages");
-      fromDialogflow = JSON.parse(retrievedData);
-
-      var qMessages = localStorage.getItem("queryMessages");
-      fromUser = JSON.parse(qMessages);
+      if(localStorage.getItem("queryMessages") != null) {
+        var qMessages = localStorage.getItem("queryMessages");
+        fromUser = JSON.parse(qMessages);
+      }
+      else{
+        fromUser = [];
+      }
       
       //alert(fromDialogflow.length);
-      i = fromDialogflow.length;
+        i = fromDialogflow.length;
+  
+      
       console.log(String(fromDialogflow[0]))
       var k = 0;
       for(k = 0; k < fromDialogflow.length; k++){
@@ -61,18 +74,39 @@
       
     }
 
-    window.onclose = deleteAll
+    function deleteMessagesIfTimeExpires(){
+      var retrievedData = localStorage.getItem("timeStamp");
+      var pastTime = JSON.parse(retrievedData);
+      //check with the current time. Delete if the time is more than 10 minutes
+      var currentTime = new Date();
+      currentTime = currentTime.getMinutes();
+      console.log('Current time  => ' +currentTime);
+      console.log('pastTime = > ' + retrievedData);
+      var timeDifference = currentTime - pastTime;
+      console.log('Time difference --> ' + timeDifference);
+      if(timeDifference > 1) {
+        deleteAll();
+      }
+
+
+    }
+
+
+
+  
     function deleteAll(){
       localStorage.removeItem("responseMessages");
       localStorage.removeItem("queryMessages");
+      localStorage.removeItem("timeStamp");
     }
 
-    // window.onclose() = function(){
-    //   // localStorage.removeItem("responseMessages");
-    //   // localStorage.removeItem("queryMessages");
-
+    function checkTheCurrentTime(){
+      var d = new Date();
+      var timeStamp = d.getMinutes();
+      console.log(timeStamp);
+      localStorage.setItem("timeStamp", JSON.stringify(timeStamp));
       
-    // }
+    }
 
 
     function setResponseFromStorage(response, node){
@@ -330,7 +364,7 @@
 
     fromDialogflow[i] = response;
     i++;
-
+    checkTheCurrentTime();
  
   }
 
