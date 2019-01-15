@@ -20,11 +20,15 @@
   
     var ENTER_KEY_CODE = 13;
     var queryInput, resultDiv, accessTokenInput, sendButton;
+    var link;
   
     window.onload = init;
     var i = 0;
+    //var j is for links;
+    var j = 0;
     var fromDialogflow = [];
     var fromUser = [];
+    var links = [];
   
     function init() {
       deleteMessagesIfTimeExpires();
@@ -46,7 +50,6 @@
         fromDialogflow =[];
       } else {
         var retrievedData = localStorage.getItem("responseMessages");
-        console.log(retrievedData+" RET ");
         fromDialogflow = JSON.parse(retrievedData);
       }
 
@@ -58,8 +61,18 @@
         fromUser = [];
       }
       
+
+
+      if(localStorage.getItem("linkNodes") != null) {
+        var linkMessages = localStorage.getItem("linkNodes");
+        links = JSON.parse(linkMessages);
+      }
+      else{
+        links = [];
+      }
       //alert(fromDialogflow.length);
         i = fromDialogflow.length;
+        j = links.length;
   
       
       console.log(String(fromDialogflow[0]))
@@ -67,7 +80,10 @@
       for(k = 0; k < fromDialogflow.length; k++){
         createQueryNode(fromUser[k]);
         var node = createResponseNode();
-        var link = "http://pixelarchitect.ca"
+        if(links.length >= 0) {
+            setLinkNodeFromResponse(links[j]);
+            j++;
+        }
         setResponseFromStorage(fromDialogflow[k], node)
 
       }
@@ -119,7 +135,15 @@
       var d = $('.chat-body');
       console.log(d.height())
       d.scrollTop(d.prop("scrollHeight"));
+    }
 
+    function setLinkNodeFromResponse(link){
+      var node = document.createElement("a");
+      node.className = "msg-receive";
+      node.innerHTML = link;
+      resultDiv.appendChild(node);
+      return node;
+  
     }
 
   
@@ -171,7 +195,6 @@
       sendText(value)
         .then(function(response) {
           var result;
-          var link = ""
           try {
             if(response.result.fulfillment.speech === ""){
               
@@ -182,7 +205,7 @@
               result = response.result.fulfillment.data.google.richResponse.items[0].simpleResponse.textToSpeech;
               if(response.result.fulfillment.data.google.richResponse.items[0].simpleResponse.link = ""){
                 var linkInformation = "Click for more information";
-                var link = "http://pixelarchitect.ca";
+                link = "http://pixelarchitect.ca";
                 var extraNode = createLinkButtonNode(); 
                 setButtonLinkNodes(linkInformation, extraNode, link);
               } else{
@@ -195,9 +218,73 @@
             }else {
   
               console.log("IN CHATBOT")
-              result = response.result.fulfillment.fromDialogflow[0].payload.chatbot.Message;
+              result = response.result.fulfillment.messages[0].payload.chatbot.Message;
               var linkInformation = "Click for more information";
-              var link = response.result.fulfillment.fromDialogflow[0].payload.chatbot.link;
+              link = response.result.fulfillment.messages[0].payload.chatbot.link;
+              console.log("THIS IS LINK " + link)
+              var extraNode = createLinkButtonNode(); 
+              setButtonLinkNodes(linkInformation, extraNode, link);
+            }
+            }
+            else {
+            result = response.result.fulfillment.speech
+            }
+          } catch(error) {
+            result = "Please try again. You can say help, to find out what I can do.";
+          }
+          setResponseJSON(response);
+          
+          setResponseOnNode(result, responseNode, link);
+        })
+        .catch(function(err) {
+          setResponseJSON(err);
+          var link="http://pixelarchitect.ca"
+          setResponseOnNode("Something goes wrong", responseNode, link);
+        });
+    }
+  
+
+   
+    function onSendButtonClick(event) {
+
+      console.log(event)
+  
+      var value = queryInput.value;
+      queryInput.value = "";
+  
+      createQueryNode(value);
+      var responseNode = createResponseNode();
+      
+  
+      sendText(value)
+        .then(function(response) {
+          var result;
+          try {
+            if(response.result.fulfillment.speech === ""){
+              
+  
+            if("data" in response.result.fulfillment) {
+              console.log("IN LAMBDA")
+              console.log(response+"");
+              result = response.result.fulfillment.data.google.richResponse.items[0].simpleResponse.textToSpeech;
+              if(response.result.fulfillment.data.google.richResponse.items[0].simpleResponse.link = ""){
+                var linkInformation = "Click for more information";
+                link = "http://pixelarchitect.ca";
+                var extraNode = createLinkButtonNode(); 
+                setButtonLinkNodes(linkInformation, extraNode, link);
+              } else{
+                link = response.result.fulfillment.data.google.richResponse.items[0].simpleResponse.link;
+                var linkInformation = "Click for more information";
+                var extraNode = createLinkButtonNode(); 
+                setButtonLinkNodes(linkInformation, extraNode, link);
+              }
+  
+            }else {
+  
+              console.log("IN CHATBOT")
+              result = response.result.fulfillment.messages[0].payload.chatbot.Message;
+              var linkInformation = "Click for more information";
+              link = response.result.fulfillment.messages[0].payload.chatbot.link;
               console.log("THIS IS LINK " + link)
               var extraNode = createLinkButtonNode(); 
               setButtonLinkNodes(linkInformation, extraNode, link);
@@ -237,7 +324,7 @@
     sendText(value)
       .then(function(response) {
         var result;
-        var link = ""
+
         try {
           if(response.result.fulfillment.speech === ""){
 
@@ -247,12 +334,13 @@
             result = response.result.fulfillment.data.google.richResponse.items[0].simpleResponse.textToSpeech;
             if(response.result.fulfillment.data.google.richResponse.items[0].simpleResponse.link = ""){
               var linkInformation = "Click for more information";
-              var link = "http://pixelarchitect.ca";
+              link = "http://pixelarchitect.ca";
               var extraNode = createLinkButtonNode(); 
               setButtonLinkNodes(linkInformation, extraNode, link);
             } else{
               var linkInformation = "Click for more information";
-              var link = response.result.fulfillment.data.google.richResponse.items[0].simpleResponse.link;
+              link = response.result.fulfillment.data.google.richResponse.items[0].simpleResponse.link;
+              console.log("In Query click " +link);
               var extraNode = createLinkButtonNode(); 
               setButtonLinkNodes(linkInformation, extraNode, link);
 
@@ -261,9 +349,9 @@
           }else {
 
             console.log("IN CHATBOT")
-            result = response.result.fulfillment.fromDialogflow[0].payload.chatbot.Message;
+            result = response.result.fulfillment.messages[0].payload.chatbot.Message;
             var linkInformation = "Click for more information";
-            var link = response.result.fulfillment.fromDialogflow[0].payload.chatbot.link;
+            link = response.result.fulfillment.messages[0].payload.chatbot.link;
             console.log("THIS IS LINK " + link)
             var extraNode = createLinkButtonNode(); 
             setButtonLinkNodes(linkInformation, extraNode, link);
@@ -285,6 +373,10 @@
         setResponseOnNode("Something goes wrong", responseNode, link);
       });
   }
+
+
+
+
 
   function createQueryNode(query) {
 
@@ -334,11 +426,13 @@
 
 	function setButtonLinkNodes(response, extraNode, linkAddress){
 		extraNode.innerHTML = response ? response : "[empty response]";
-      extraNode.setAttribute("data-actual-response", response);
-      console.log("Link addres " + linkAddress);
-		extraNode.style.backgroundColor = "royalblue";
-		extraNode.setAttribute("href","google.ca")
-
+    extraNode.setAttribute("data-actual-response", response);
+    console.log("Link addres " + linkAddress);
+    extraNode.style.backgroundColor = "royalblue";
+    console.log("Link Address -- > " + linkAddress);
+    extraNode.setAttribute("href","google.ca");
+    links[j] = linkAddress;
+    j++;
 	}
 
 
@@ -351,11 +445,20 @@
 
     response = response.replace(/\n/g, "<br />");
 
+
     node.innerHTML = response;
     node.style.textAlign = "left";
     node.className = "msg-receive";
-    
+
+    var linkNode = document.createElement("a");
+    linkNode.className = "msg-receive";
+    linkNode.innerHTML = "THIS IS Link";
+    console.log("LLLLLink --- > " + link)
+    resultDiv.appendChild(linkNode);
+
     resultDiv.appendChild(node);
+
+
     var d = $('.chat-body');
     console.log(d.height())
     d.scrollTop(d.prop("scrollHeight"));
@@ -377,6 +480,7 @@
   window.onbeforeunload = function(){
     localStorage.setItem("responseMessages", JSON.stringify(fromDialogflow));
     localStorage.setItem("queryMessages", JSON.stringify(fromUser));
+    localStorage.setItem("linkNodes", JSON.stringify(links));
  }
 
 
