@@ -82,9 +82,17 @@
       var pastTime = JSON.parse(retrievedData);
       //check with the current time. Delete if the time is more than 10 minutes
       var currentTime = new Date();
-      currentTime = currentTime.getMinutes();
+      currentTime = currentTime.getTime();
       console.log('Current time  => ' +currentTime);
       console.log('pastTime = > ' + retrievedData);
+
+      var difference = currentTime - retrievedData;
+
+      var minutesDifference = Math.floor(difference/1000/60);
+      difference -= minutesDifference*1000*60
+      console.log(minutesDifference + '  <----minute/s');
+
+
       var timeDifference = currentTime - pastTime;
       console.log('Time difference --> ' + timeDifference);
       if(timeDifference > 1) {
@@ -105,8 +113,7 @@
 
     function checkTheCurrentTime(){
       var d = new Date();
-      var timeStamp = d.getMinutes();
-      console.log(timeStamp);
+      var timeStamp = d.getTime();
       localStorage.setItem("timeStamp", JSON.stringify(timeStamp));
       
     }
@@ -281,21 +288,6 @@
     var node = document.createElement("div");
     node.className = "msg-send";
     node.innerHTML = query;
-    var iconNode = document.createElement("i");
-    iconNode.className = "fas fa-user";
-    iconNode.style="float:right; background-color:black; font-size:40px; padding:5px; z-index:0";
-    iconNode.style.cssFloat = "right";
-    iconNode.style.display = "inline-block";
-    //iconNode.style.height = "50px";
-    //iconNode.style.width = "50px";
-    iconNode.style.backgroundColor = "#e9ecef";
-    iconNode.style.color = "black";
-    iconNode.style.zIndex="10000";
-    iconNode.style.position="relative";
-    iconNode.style.textAlign="right";
-    iconNode.style.padding="10px"
-    resultDiv.appendChild(iconNode);
-
     console.log(query);
     fromUser[i] = query;
 
