@@ -94,9 +94,10 @@
       console.log(Math.abs(Math.round(difference)) + '  <----minute/s');
 
 
-      var timeDifference = currentTime - pastTime;
-      console.log('Time difference --> ' + timeDifference);
+      var timeDifference = Math.abs(Math.round(difference));
+      console.log('Time difference -- > ' + timeDifference);
       if(timeDifference > 1) {
+        console.log("Delete All ")
         deleteAll();
       }
 
@@ -123,8 +124,6 @@
     function setResponseFromStorage(response, node){
 
       node.innerHTML = response;
-      node.style.textAlign = "left";
-      node.className = "msg-receive";
       
       resultDiv.appendChild(node);
       var d = $('.chat-body');
@@ -148,14 +147,30 @@
     var chatIcon = $('#chat-icon');
 
 
-
-
-
     chatIcon.on('click', function(){
       $('.wrapper').show();
       chatIcon.toggleClass('fa-times-circle fa-minus-circle')
       $('#text-before-icon').hide();
     });
+
+
+    $( "#chat-icon" )
+  .mouseenter(function() {
+    var iconDiv=document.getElementById("icon-div");
+    iconDiv.innerHTML = '<i class="fas fa-comment" id="chat-icon"></i>'
+    console.log('mouse')
+    //$("#chat-icon" ).addClass('fas fa-comment');
+    //$("#chat-icon" ).removeClass('fas fa-comments');
+  })
+  .mouseleave(function() {
+    var iconDiv=document.getElementById("icon-div");
+    iconDiv.innerHTML = '<i class="fas fa-comments" id="chat-icon"></i>'
+    console.log('mouse left')
+    //$("#chat-icon" ).addClass('fas fa-comments');
+    //$("#chat-icon" ).removeClass('fas fa-comment');
+  });
+
+
 
   
     arrow.on('click', function(){
@@ -290,7 +305,7 @@
     // node.className = "msg-send";
     // node.innerHTML = query;
     // console.log(query);
-    // fromUser[i] = query;
+    fromUser[i] = query;
 
     // resultDiv.appendChild(node);
 
