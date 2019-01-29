@@ -84,13 +84,14 @@
       var currentTime = new Date();
       currentTime = currentTime.getTime();
       console.log('Current time  => ' +currentTime);
+      console.log('TYPE  --> ' + typeof currentTime);
       console.log('pastTime = > ' + retrievedData);
 
-      var difference = currentTime - retrievedData;
+      var difference = (currentTime - retrievedData)/1000;
 
-      var minutesDifference = Math.floor(difference/1000/60);
-      difference -= minutesDifference*1000*60
-      console.log(minutesDifference + '  <----minute/s');
+      
+      difference /= 60;
+      console.log(Math.abs(Math.round(difference)) + '  <----minute/s');
 
 
       var timeDifference = currentTime - pastTime;
@@ -286,13 +287,18 @@
   function createQueryNode(query) {
 
     var node = document.createElement("div");
-    node.className = "msg-send";
-    node.innerHTML = query;
-    console.log(query);
-    fromUser[i] = query;
+    // node.className = "msg-send";
+    // node.innerHTML = query;
+    // console.log(query);
+    // fromUser[i] = query;
 
+    // resultDiv.appendChild(node);
+
+
+    node.innerHTML = '<div class="row msg_container base_sent"><div class="col-md-10 col-xs-10"><div class="messages msg_sent"><p>'+query+'</p><time datetime="2009-11-13T20:00">Timothy • 51 min</time></div></div><div class="col-md-2 col-xs-2 avatar"><i class="fas fa-user" style="font-size: 40px; background-color: #D3D3D3; padding : 5px;"></i></div></div>'
     resultDiv.appendChild(node);
   }
+
 
 
 function createLinkButtonNode(){
@@ -313,7 +319,7 @@ function setAccessToken(){
   function createResponseNode() {
 
     var node = document.createElement("div");
-    node.className = "msg-receive";
+    //node.className = "msg-receive";
     node.innerHTML = "...";
     resultDiv.appendChild(node);
     return node;
@@ -341,17 +347,17 @@ function setAccessToken(){
     response = response.replace(/\n/g, "<br />");
 
 
-    node.innerHTML = response;
-    node.style.textAlign = "left";
-    node.className = "msg-receive";
-
+    node.innerHTML = '<div class="row msg_container base_receive"><div class="col-md-2 col-xs-2 avatar"><i class="fas fa-user" style="font-size: 40px; background-color: #D3D3D3; padding : 5px;"></i></div><div class="col-md-10 col-xs-10"><div class="messages msg_receive"><p>'+response+'</p><time datetime="2009-11-13T20:00">Timothy • 51 min</time></div></div></div>';
+    
     if(link != undefined) {
       
       console.log("THE LLLLLLLLINK " + link);
 
       var linkNode = document.createElement("div");
-      linkNode.className = "msg-receive";
-      linkNode.innerHTML = '<br> <a href='+link+'>Click Here for more information</a>';
+      //linkNode.className = "msg-receive";
+      linkNode.innerHTML = '<div class="row msg_container base_receive"><div class="col-md-2 col-xs-2 avatar"><i class="fas fa-user" style="font-size: 40px; background-color: #D3D3D3; padding : 5px;"></i></div><div class="col-md-10 col-xs-10"><div class="messages msg_receive"><p><a href='+link+'>Click Here for more info</a></p><time datetime="2009-11-13T20:00">Timothy • 51 min</time></div></div></div>';
+
+      //linkNode.innerHTML = '<br> <a href='+link+'>Click Here for more info</a>';
       node.appendChild(linkNode);
     }
 
