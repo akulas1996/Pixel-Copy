@@ -28,6 +28,7 @@
     var fromDialogflow = [];
     var fromUser = [];
     var links = [];
+    var isChatWindowOpen = false;
   
     function init() {
       deleteMessagesIfTimeExpires();
@@ -40,7 +41,6 @@
       queryInput.addEventListener("keydown", queryInputKeyDown);
       sendButton.addEventListener("click", onSendButtonClick);
       setAccessTokenButton.addEventListener("click", setAccessToken);
-      
 
   
       window.init(accessTokenInput.value);
@@ -59,10 +59,24 @@
       else{
         fromUser = [];
       }
-      
+
       
       //alert(fromDialogflow.length);
         i = fromDialogflow.length;
+
+        if(i < 1){
+          var node = document.createElement("div");
+          //node.className = "msg-receive";
+          //response = "Hello! How can we help you today?";
+          node.innerHTML = '<div class="row msg_container base_receive"><div class="col-md-2 col-xs-2 avatar"><i class="fas fa-user" style="font-size: 40px; background-color: #346282; padding : 5px;"></i></div><div class="col-md-10 col-xs-10"><div class="messages msg_receive"><p>Hello! How can we help you today?</p><time datetime="2009-11-13T20:00">Pixel Architect </time></div></div></div>';
+          //node.innerHTML = "Hello"
+          resultDiv.appendChild(node);
+        } else{
+          var d = $('.chat-body');
+          console.log("THE HEIGHT::::::" + d.height());
+          d.scrollTop(d.prop("scrollHeight"));
+          console.log('IM HERE')
+        }
 
   
       
@@ -126,9 +140,7 @@
       node.innerHTML = response;
       
       resultDiv.appendChild(node);
-      var d = $('.chat-body');
-      console.log(d.height())
-      d.scrollTop(d.prop("scrollHeight"));
+
     }
 
     function setLinkNodeFromResponse(link){
@@ -145,38 +157,79 @@
     var textarea = $('.chat-text textarea');
 
     var chatIcon = $('#chat-icon');
+    var textBeforeIcon = $('#text-before-icon')
 
 
     chatIcon.on('click', function(){
-      $('.wrapper').show();
-      chatIcon.toggleClass('fa-times-circle fa-minus-circle')
-      $('#text-before-icon').hide();
+      if(isChatWindowOpen == false) {
+        $('.wrapper').show();
+        chatIcon.toggleClass('fa-times-circle fa-minus-circle')
+        $('#text-before-icon').hide();
+        var d = $('.chat-body');
+        console.log(d.height())
+        d.scrollTop(d.prop("scrollHeight"));
+        console.log('open')
+        isChatWindowOpen = true;
+      }
+      else{
+        $('.wrapper').hide();
+        chatIcon.toggleClass('fa-times-circle fa-minus-circle')
+        $('#text-before-icon').hide();
+        $('#text-before-icon').show();
+        console.log('close');
+        isChatWindowOpen = false;
+      }
     });
 
 
-    $( "#chat-icon" )
-  .mouseenter(function() {
-    var iconDiv=document.getElementById("icon-div");
-    iconDiv.innerHTML = '<i class="fas fa-comment" id="chat-icon"></i>'
-    console.log('mouse')
-    //$("#chat-icon" ).addClass('fas fa-comment');
-    //$("#chat-icon" ).removeClass('fas fa-comments');
-  })
-  .mouseleave(function() {
-    var iconDiv=document.getElementById("icon-div");
-    iconDiv.innerHTML = '<i class="fas fa-comments" id="chat-icon"></i>'
-    console.log('mouse left')
-    //$("#chat-icon" ).addClass('fas fa-comments');
-    //$("#chat-icon" ).removeClass('fas fa-comment');
-  });
+    textBeforeIcon.on('click', function(){
+      if(isChatWindowOpen == false) {
+        $('.wrapper').show();
+        chatIcon.toggleClass('fa-times-circle fa-minus-circle')
+        $('#text-before-icon').hide();
+        var d = $('.chat-body');
+        console.log(d.height())
+        d.scrollTop(d.prop("scrollHeight"));
+        console.log('open')
+        isChatWindowOpen = true;
+      }
+      else{
+        $('.wrapper').hide();
+        chatIcon.toggleClass('fa-times-circle fa-minus-circle')
+        $('#text-before-icon').hide();
+        $('#text-before-icon').show();
+        console.log('close');
+        isChatWindowOpen = false;
+      }
+    });
+
+
+  //   $( "#chat-icon" )
+  // .mouseenter(function() {
+  //   var iconDiv=document.getElementById("icon-div");
+  //   iconDiv.innerHTML = '<i class="fas fa-comment" id="chat-icon"></i>'
+  //   console.log('mouse')
+  //   //$("#chat-icon" ).addClass('fas fa-comment');
+  //   //$("#chat-icon" ).removeClass('fas fa-comments');
+  // })
+  // .mouseleave(function() {
+  //   var iconDiv=document.getElementById("icon-div");
+  //   iconDiv.innerHTML = '<i class="fas fa-comments" id="chat-icon"></i>'
+  //   console.log('mouse left')
+  //   //$("#chat-icon" ).addClass('fas fa-comments');
+  //   //$("#chat-icon" ).removeClass('fas fa-comment');
+  // });
 
 
 
   
     arrow.on('click', function(){
       $('.wrapper').hide();
-      $('#text-before-icon').show();
       chatIcon.toggleClass('fa-times-circle fa-minus-circle')
+      $('#text-before-icon').hide();
+      $('#text-before-icon').show();
+      console.log('close');
+      isChatWindowOpen = false;
     
     });
   
@@ -285,6 +338,7 @@
           result = "Please try again. You can say help, to find out what I can do.";
         }
         setResponseJSON(response);
+        queryInput.value='';
         
         setResponseOnNode(result, responseNode, link);
       })
@@ -310,7 +364,7 @@
     // resultDiv.appendChild(node);
 
 
-    node.innerHTML = '<div class="row msg_container base_sent"><div class="col-md-10 col-xs-10"><div class="messages msg_sent"><p>'+query+'</p><time datetime="2009-11-13T20:00">Timothy • 51 min</time></div></div><div class="col-md-2 col-xs-2 avatar"><i class="fas fa-user" style="font-size: 40px; background-color: #D3D3D3; padding : 5px;"></i></div></div>'
+    node.innerHTML = '<div class="row msg_container base_sent"><div class="col-md-10 col-xs-10"><div class="messages msg_sent"><p>'+query+'</p><time datetime="2009-11-13T20:00">Guest </time></div></div><div class="col-md-2 col-xs-2 avatar"><i class="fas fa-user" style="font-size: 40px; background-color: #D3D3D3; padding : 5px;"></i></div></div>'
     resultDiv.appendChild(node);
   }
 
@@ -362,7 +416,7 @@ function setAccessToken(){
     response = response.replace(/\n/g, "<br />");
 
 
-    node.innerHTML = '<div class="row msg_container base_receive"><div class="col-md-2 col-xs-2 avatar"><i class="fas fa-user" style="font-size: 40px; background-color: #D3D3D3; padding : 5px;"></i></div><div class="col-md-10 col-xs-10"><div class="messages msg_receive"><p>'+response+'</p><time datetime="2009-11-13T20:00">Timothy • 51 min</time></div></div></div>';
+    node.innerHTML = '<div class="row msg_container base_receive"><div class="col-md-2 col-xs-2 avatar"><i class="fas fa-user" style="font-size: 40px; background-color: #346282; padding : 5px;"></i></div><div class="col-md-10 col-xs-10"><div class="messages msg_receive"><p>'+response+'</p><time datetime="2009-11-13T20:00">Pixel Architect </time></div></div></div>';
     
     if(link != undefined) {
       
@@ -370,7 +424,7 @@ function setAccessToken(){
 
       var linkNode = document.createElement("div");
       //linkNode.className = "msg-receive";
-      linkNode.innerHTML = '<div class="row msg_container base_receive"><div class="col-md-2 col-xs-2 avatar"><i class="fas fa-user" style="font-size: 40px; background-color: #D3D3D3; padding : 5px;"></i></div><div class="col-md-10 col-xs-10"><div class="messages msg_receive"><p><a href='+link+'>Click Here for more info</a></p><time datetime="2009-11-13T20:00">Timothy • 51 min</time></div></div></div>';
+      linkNode.innerHTML = '<div class="row msg_container base_receive"><div class="col-md-2 col-xs-2 avatar"><i class="fas fa-user" style="font-size: 40px; background-color: #346282; padding : 5px;"></i></div><div class="col-md-10 col-xs-10"><div class="messages msg_receive"><p><a target="_blank" href='+link+'>Click Here for more info</a></p><time datetime="2009-11-13T20:00">Pixel Architect</time></div></div></div>';
 
       //linkNode.innerHTML = '<br> <a href='+link+'>Click Here for more info</a>';
       node.appendChild(linkNode);
