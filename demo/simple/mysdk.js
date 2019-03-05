@@ -53,17 +53,17 @@ head.appendChild(script);
 //Attach demofunctionsScript+
 var head  = document.getElementsByTagName('head')[0];
 var script  = document.createElement('script');
-script.src = 'http://52.206.140.24/ThirdPartyJS/thirdpartyjs/PixelArchitect-chatbot/demo/simple/demoFunctions.js';
+script.src = 'http://18.225.18.49/ThirdPartyJs/thirdpartyjs/PixelArchitect-chatbot/demo/simple/demoFunctions.js';
 head.appendChild(script);
 
 //Attach layout link
 var script  = document.createElement('script');
-script.src = 'http://52.206.140.24/ThirdPartyJS/thirdpartyjs/PixelArchitect-chatbot/demo/simple/layout.js';
+script.src = 'http://18.225.18.49/ThirdPartyJs/thirdpartyjs/PixelArchitect-chatbot/demo/simple/layout.js';
 head.appendChild(script);
 
 //Attach API.AI
 var script  = document.createElement('script');
-script.src = 'http://52.206.140.24/ThirdPartyJS/thirdpartyjs/PixelArchitect-chatbot/target/ApiAi.js';
+script.src = 'http://18.225.18.49/ThirdPartyJs/thirdpartyjs/PixelArchitect-chatbot/target/ApiAi.js';
 head.appendChild(script);
 
 //Attaching style sheet
@@ -85,7 +85,7 @@ var link  = document.createElement('link');
 link.id   = 'cssId';
 link.rel  = 'stylesheet';
 link.type = 'text/css';
-link.href = 'http://52.206.140.24/ThirdPartyJS/thirdpartyjs/PixelArchitect-chatbot/demo/simple/chatbot_style.css';
+link.href = 'http://18.225.18.49/ThirdPartyJs/thirdpartyjs/PixelArchitect-chatbot/demo/simple/chatbot_style.css';
 link.media = 'all';
 head.appendChild(link);
 
