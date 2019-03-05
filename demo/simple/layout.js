@@ -68,7 +68,7 @@
           var node = document.createElement("div");
           //node.className = "msg-receive";
           //response = "Hello! How can we help you today?";
-          node.innerHTML = '<div class="row msg_container base_receive"><div class="col-md-2 col-xs-2 avatar"><i class="fas fa-user" style="font-size: 40px; background-color: #346282; padding : 5px;"></i></div><div class="col-md-10 col-xs-10"><div class="messages msg_receive"><p>Hello! How can we help you today?</p><time datetime="2009-11-13T20:00">Pixel Architect </time></div></div></div>';
+          node.innerHTML = '<div class="msg_container base_receive"><div ><i class="fas fa-user" style="font-size: 40px; background-color: #FFFFFF; padding : 5px;"></i></div><div ><div class="messages msg_receive"><p>Hello! How can we help you today?</p><time datetime="2009-11-13T20:00">Pixel Architect </time></div></div></div>';
           //node.innerHTML = "Hello"
           resultDiv.appendChild(node);
         } else{
@@ -364,7 +364,7 @@
     // resultDiv.appendChild(node);
 
 
-    node.innerHTML = '<div class="row msg_container base_sent"><div class="col-md-10 col-xs-10"><div class="messages msg_sent"><p>'+query+'</p><time datetime="2009-11-13T20:00">Guest </time></div></div><div class="col-md-2 col-xs-2 avatar"><i class="fas fa-user" style="font-size: 40px; background-color: #D3D3D3; padding : 5px;"></i></div></div>'
+    node.innerHTML = '<div class="row msg_container base_sent"><div ><div class="messages msg_sent"><p>'+query+'</p><time datetime="2009-11-13T20:00">Guest </time></div></div><div ><i class="fas fa-user" style="font-size: 40px; background-color: #D3D3D3; padding : 5px;"></i></div></div>'
     resultDiv.appendChild(node);
   }
 
@@ -416,7 +416,7 @@ function setAccessToken(){
     response = response.replace(/\n/g, "<br />");
 
 
-    node.innerHTML = '<div class="row msg_container base_receive"><div class="col-md-2 col-xs-2 avatar"><i class="fas fa-user" style="font-size: 40px; background-color: #346282; padding : 5px;"></i></div><div class="col-md-10 col-xs-10"><div class="messages msg_receive"><p>'+response+'</p><time datetime="2009-11-13T20:00">Pixel Architect </time></div></div></div>';
+    node.innerHTML = '<div class="row msg_container base_receive"><div ><i class="fas fa-user" style="font-size: 40px; background-color: #FFFFFF; padding : 5px;"></i></div><div ><div class="messages msg_receive"><p>'+response+'</p><time datetime="2009-11-13T20:00">Pixel Architect </time></div></div></div>';
     
     if(link != undefined) {
       
@@ -424,7 +424,7 @@ function setAccessToken(){
 
       var linkNode = document.createElement("div");
       //linkNode.className = "msg-receive";
-      linkNode.innerHTML = '<div class="row msg_container base_receive"><div class="col-md-2 col-xs-2 avatar"><i class="fas fa-user" style="font-size: 40px; background-color: #346282; padding : 5px;"></i></div><div class="col-md-10 col-xs-10"><div class="messages msg_receive"><p><a target="_blank" href='+link+'>Click Here for more info</a></p><time datetime="2009-11-13T20:00">Pixel Architect</time></div></div></div>';
+      linkNode.innerHTML = '<div class="row msg_container base_receive"><div  avatar"><i class="fas fa-user" style="font-size: 40px; background-color: #FFFFFF; padding : 5px;"></i></div><div ><div class="messages msg_receive"><p><a target="_blank" href='+link+'>Click Here for more info</a></p><time datetime="2009-11-13T20:00">Pixel Architect</time></div></div></div>';
 
       //linkNode.innerHTML = '<br> <a href='+link+'>Click Here for more info</a>';
       node.appendChild(linkNode);
