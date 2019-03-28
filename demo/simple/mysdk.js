@@ -46,24 +46,22 @@ var wrapper =
 //JQuery
 var head = document.getElementsByTagName('head')[0];
 var script  = document.createElement('script');
-script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js';
+script.src = 'http://18.225.18.49/ThirdPartyJs/thirdpartyjs/PixelArchitect-chatbot-copy/demo/simple/jquery-3.3.1.min.js';
+script.defer = true;
 head.appendChild(script);
 
 
 //Attach demofunctionsScript+
 var head  = document.getElementsByTagName('head')[0];
 var script  = document.createElement('script');
-script.src = 'http://18.225.18.49/ThirdPartyJs/thirdpartyjs/PixelArchitect-chatbot/demo/simple/demoFunctions.js';
-head.appendChild(script);
-
-//Attach layout link
-var script  = document.createElement('script');
-script.src = 'http://18.225.18.49/ThirdPartyJs/thirdpartyjs/PixelArchitect-chatbot/demo/simple/layout.js';
+script.src = 'http://18.225.18.49/ThirdPartyJs/thirdpartyjs/PixelArchitect-chatbot-copy/demo/simple/demoFunctions.js';
+script.defer = true;
 head.appendChild(script);
 
 //Attach API.AI
 var script  = document.createElement('script');
-script.src = 'http://18.225.18.49/ThirdPartyJs/thirdpartyjs/PixelArchitect-chatbot/target/ApiAi.js';
+script.src = 'http://18.225.18.49/ThirdPartyJs/thirdpartyjs/PixelArchitect-chatbot-copy/target/ApiAi.js';
+script.defer = true;
 head.appendChild(script);
 
 //Attaching style sheet
@@ -71,10 +69,11 @@ var head  = document.getElementsByTagName('head')[0];
 var link  = document.createElement('link');
 link.id   = 'cssId';
 link.rel  = 'stylesheet';
-    link.setAttribute('crossorigin', 'anonymous');
-    link.setAttribute('integrity', 'sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr');
+link.setAttribute('crossorigin', 'anonymous');
+link.setAttribute('integrity', 'sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr');
 link.type = 'text/css';
 link.href = 'https://use.fontawesome.com/releases/v5.7.2/css/all.css';
+script.defer = true;
 head.appendChild(link);
 
 
@@ -85,7 +84,8 @@ var link  = document.createElement('link');
 link.id   = 'cssId';
 link.rel  = 'stylesheet';
 link.type = 'text/css';
-link.href = 'http://18.225.18.49/ThirdPartyJs/thirdpartyjs/PixelArchitect-chatbot/demo/simple/chatbot_style.css';
+link.href = 'http://18.225.18.49/ThirdPartyJs/thirdpartyjs/PixelArchitect-chatbot-copy/demo/simple/chatbot_style.css';
+script.defer = true;
 link.media = 'all';
 head.appendChild(link);
 
@@ -100,3 +100,10 @@ div.innerHTML = wrapper;
 // better to use CSS though - just set class
 div.setAttribute('class', 'myclass'); // and make sure myclass has some styles in css
 document.body.appendChild(div);
+
+
+//Attach layout link
+var script  = document.createElement('script');
+script.src = 'http://18.225.18.49/ThirdPartyJs/thirdpartyjs/PixelArchitect-chatbot-copy/demo/simple/layout.js';
+script.defer = true;
+head.appendChild(script);
