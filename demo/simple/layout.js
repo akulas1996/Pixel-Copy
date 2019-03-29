@@ -32,6 +32,26 @@
     var isChatWindowOpen = false;
   
     function init() {
+
+      //detect device
+      if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+        console.log('This is mobile');
+        var chatIcon = document.getElementById('chat-icon');
+        chatIcon.style.fontSize = '80px';
+
+        var textBeforeIcon = document.getElementById('text-before-icon');
+        textBeforeIcon.style.marginRight = '5%';
+        textBeforeIcon.style.marginBottom = '5%';
+        textBeforeIcon.style.padding = '20px';
+        textBeforeIcon.height = '10%';
+
+       } else {
+         console.log("This is computer");
+         var chatIcon = document.getElementById('chat-icon');         
+         chatIcon.style.color = 'green';
+       }
+
+
       deleteMessagesIfTimeExpires();
       queryInput = document.getElementById("q");
       sendButton = document.getElementById("click");
@@ -69,7 +89,7 @@
           var node = document.createElement("div");
           //node.className = "msg-receive";
           //response = "Hello! How can we help you today?";
-          node.innerHTML = '<div class="msg_container base_receive"><div ><i class="fas fa-user" style="font-size: 40px; background-color: #FFFFFF; padding : 5px;"></i></div><div ><div class="messages msg_receive"><p>Hello! How can we help you today?</p><time datetime="2009-11-13T20:00">Pixel Architect </time></div></div></div>';
+          node.innerHTML = '<div class="msg_container base_receive"><div ><i class="fas fa-user message-response-text-icon"></i></div><div ><div class="messages msg_receive"><p>Hello! How can we help you today?</p><time datetime="2009-11-13T20:00">Pixel Architect </time></div></div></div>';
           //node.innerHTML = "Hello"
           resultDiv.appendChild(node);
         } else{
@@ -374,7 +394,7 @@
 function createLinkButtonNode(){
 	var node = document.createElement("a");
     node.className = "msg-receive";
-    node.innerHTML = "...";
+    node.innerHTML = "";
     resultDiv.appendChild(node);
     return node;
 
@@ -390,7 +410,7 @@ function setAccessToken(){
 
     var node = document.createElement("div");
     //node.className = "msg-receive";
-    node.innerHTML = "...";
+    node.innerHTML = "";
     resultDiv.appendChild(node);
     return node;
   }
@@ -457,7 +477,7 @@ function setAccessToken(){
     localStorage.setItem("queryMessages", JSON.stringify(fromUser));
     localStorage.setItem("linkNodes", JSON.stringify(links));
  }
+ 
 
-    
 
 })();

@@ -13,7 +13,7 @@ var wrapper =
 '	        </div>'+
 '	    </div>'+
 '	</div>'+
-'	    <div><i class="fas fa-comments" id="chat-icon" ></i></div>'+
+'	    <div><i class="fas fa-comments" id="chat-icon" class ="chat-icon-resize"></i></div>'+
 '	    '+
 '	    <div  id = "text-before-icon" style="position:fixed; color:white;">How can we help?</div>'+
 '	<div class="wrapper" >'+
