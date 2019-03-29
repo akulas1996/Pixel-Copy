@@ -48,7 +48,6 @@
        } else {
          console.log("This is computer");
          var chatIcon = document.getElementById('chat-icon');         
-         chatIcon.style.color = 'green';
        }
 
 
